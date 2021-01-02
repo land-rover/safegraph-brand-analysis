@@ -1,4 +1,4 @@
-# Analyzing Top Brands in SafeGraph Neighborhood Patterns Data
+#Analyzing Top Brands in SafeGraph Neighborhood Patterns Data
 
 SafeGraph provides timely information about the brands visitors to a neighborhood also visited during the same time period.  The data is provided in json through two columns in the Neighborhood Patterns schema: `top_same_month_brand` and `top_same_day_brand`.
 
@@ -30,7 +30,7 @@ In general, `top_same_day_brand` has a much smaller range than `top_same_month_b
 It's useful!  A business owner can use it to identify opportunities for cross-promotion and co-branding.  Policymakers may find it useful for understanding the evolving preferences and habits of their citizenry.  Social science researchers will value its wide coverage and high frequency, which add power to any explanation of human behavior associated with specific times and places.
 
 ## **What's in this repository?**
-This repository contains a [function]() that transforms SafeGraph Top Brands data into a matrix of Tf-Idf statistics.  Element <img src="https://render.githubusercontent.com/render/math?math=(i,j)"> in the matrix corresponds to the Tf-Idf of brand <img src="https://render.githubusercontent.com/render/math?math=j"> in geography <img src="https://render.githubusercontent.com/render/math?math=i">.  By analogy to Natural Language Processing, each brand is modeled as a "word" in a "corpus" of geographically-based "documents".
+This repository contains a [function](https://github.com/land-rover/safegraph-brand-analysis/blob/main/function.py) that transforms SafeGraph Top Brands data into a matrix of Tf-Idf statistics.  Element <img src="https://render.githubusercontent.com/render/math?math=(i,j)"> in the matrix corresponds to the Tf-Idf of brand <img src="https://render.githubusercontent.com/render/math?math=j"> in geography <img src="https://render.githubusercontent.com/render/math?math=i">.  By analogy to Natural Language Processing, each brand is modeled as a "word" in a "corpus" of geographically-based "documents".
  
  ## **What is Tf-Idf and why calculate it?**
 I love travel books.  Bear with me for a moment :slightly_smiling_face: 
@@ -43,7 +43,7 @@ The formula for “interesting” in a good travel book is intuitive: write abou
 
 Tf-Idf is a metric for the importance of a word in a document. It is calculated as the product of two measures: (1) **term frequency**, which is the number of times a word is found in a document, and (2) **inverse document frequency**, which is the ratio of the number of unique documents in a corpus to the number of those documents that contain the word.  Thus the Tf-Idf scales the "raw" term frequency of a word by its rarity in the corpus.  A word in every document like <em>the</em> isn't scaled, but a word in few documents like <em>Kamul</em> is scaled up.
 
->This repository contains a [function]() that transforms SafeGraph Top Brands data into a matrix of Tf-Idf statistics.**  
+>This repository contains a [function](https://github.com/land-rover/safegraph-brand-analysis/blob/main/function.py) that transforms SafeGraph Top Brands data into a matrix of Tf-Idf statistics.**  
 
 Element <img src="https://render.githubusercontent.com/render/math?math=(i,j)"> in the resulting Tf-Idf matrix corresponds to the importance of brand <img src="https://render.githubusercontent.com/render/math?math=j"> in geography <img src="https://render.githubusercontent.com/render/math?math=i">, where each brand is modeled as a "word" in a "corpus" of geographically-based "documents".  
 
@@ -62,7 +62,7 @@ Tf-Idf recognizes this explicitly and forces the modeler to declare up-front the
 
 What is gained?  Comparability, across space, time, and brands. 
  ## **So, how does the function work?**
->The primary [function]() is `brand_transformer`, which transforms SafeGraph Top Brands data into a <img src="https://render.githubusercontent.com/render/math?math=G \times B"> matrix of Tf-Idf statistics ('tfidf') and two companion dictionaries: one that indexes the matrix's <img src="https://render.githubusercontent.com/render/math?math=G"> geographies ('gidxs') and the other that indexes its <img src="https://render.githubusercontent.com/render/math?math=B"> brands ('bidxs').  This matrix contains all the information necessary for any kind of subsequent analysis of SafeGraph Top Brands data.
+>The primary [function](https://github.com/land-rover/safegraph-brand-analysis/blob/main/function.py) is `brand_transformer`, which transforms SafeGraph Top Brands data into a <img src="https://render.githubusercontent.com/render/math?math=G \times B"> matrix of Tf-Idf statistics ('tfidf') and two companion dictionaries: one that indexes the matrix's <img src="https://render.githubusercontent.com/render/math?math=G"> geographies ('gidxs') and the other that indexes its <img src="https://render.githubusercontent.com/render/math?math=B"> brands ('bidxs').  This matrix contains all the information necessary for any kind of subsequent analysis of SafeGraph Top Brands data.
 
 To illustrate its use, we begin by calling  `brand_transformer` to create two transformed objects based on `top_same_month_brand` for the analysis to follow: one for the contiguous United States (<em>usmonth</em>) and the other for King County, Washington (<em>kingmonth</em>).
 
