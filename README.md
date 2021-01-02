@@ -111,7 +111,7 @@ I wrote a function called `display_cbg`for a reader-friendly view of a CBG in br
     Fred Meyer					19.302124
     QFC (Quality Food Centers)	19.276441
     Walmart						19.093695
-    76							19.013357
+    76						19.013357
     7-Eleven					18.753161
     Costco Wholesale Corp.		18.000000
     Jack in the Box				16.451175
@@ -140,13 +140,12 @@ I wrote a function called `plot_brand_importance` to make a map of this slice.  
 
     [In] plot_brand_importance('Starbucks', usmonth)
 
-Starbucks Brand Importance (national cohort)            
+Starbucks Brand Importance (national cohort)
 ![](https://i.ibb.co/8gbF42z/foo-3.png)
-Starbucks's surprising rarity at a national level adds importance to the visits it receives from visitors to the CHOP.  This becomes evident through the up-scaling that occurs in CHOP's Tf-Idf statistics calculated on the national cohort, shown visually above and quantitatively below.  
-
+Starbucks's surprising rarity at a national level adds importance to the visits it receives from visitors to the CHOP.  This becomes evident through the up-scaling that occurs in CHOP's Tf-Idf statistics calculated on the national cohort, shown visually above and quantitatively below.
     [In] um[usmonth['gidxs']['530330075005'], usmonth['bidxs']['Starbucks']]
     [Out] 59.65211013698326
-    
+
 However, from a <img src="https://render.githubusercontent.com/render/math?math=G \times 1"> slice of the <em>kingmonth</em> `brand_transformer` object, we learn that Starbucks is ubiquitous in King County.    
 
     [In] km[:, kingmonth['bidxs']['Starbucks']]
@@ -154,9 +153,8 @@ However, from a <img src="https://render.githubusercontent.com/render/math?math=
     	with 1422 stored elements in Compressed Sparse Row format>
 
 Thus, for Starbucks, Tf-Idf<img src="https://render.githubusercontent.com/render/math?math=\approx">Tf, a fact already confirmed above through comparison of the raw `top_same_month_brand` data with the transformed brand-slice based on the King County cohort.
-     
-**So, a final comparision of CHOP with the rest of King County confirms what some already suspected: the revolution will not be televised ... nor sipped .**
 
+So, a final comparision of CHOP with the rest of King County confirms what some already suspected: the revolution will not be televised ... nor sipped .
     [In] km_slice = km[:, kingmonth['bidxs']['Starbucks']]  
     [In] km[kingmonth['gidxs']['530330075005'], kingmonth['bidxs']['Starbucks']] > np.quantile(km_slice.todense(), .8)
     [Out] False
