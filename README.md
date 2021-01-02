@@ -102,23 +102,23 @@ I wrote a function called `display_cbg`for a reader-friendly view of a CBG in br
     Starbucks					42.000000
     Safeway						27.000000
     Walgreens					26.057662
-    Safeway Pharmacy			24.948181
+    Safeway Pharmacy				24.948181
     Taco Bell					24.526998
     Shell Oil					24.000000
     McDonald's					23.000000
     Chevron						22.000000
     Target						19.323183
     Fred Meyer					19.302124
-    QFC (Quality Food Centers)	19.276441
+    QFC (Quality Food Centers)			19.276441
     Walmart						19.093695
     76						19.013357
     7-Eleven					18.753161
-    Costco Wholesale Corp.		18.000000
-    Jack in the Box				16.451175
+    Costco Wholesale Corp.			18.000000
+    Jack in the Box					16.451175
     ARCO						15.667727
     Subway						15.525617
-    The Home Depot				13.249032
-    Safeway Fuel Station		13.224103
+    The Home Depot					13.249032
+    Safeway Fuel Station				13.224103
         
 Set differences between the indices of the CHOP and police `display_cbg` outputs reveal that visitors to CHOP preferred Taco Bell over Poke for the munchies and emphasized shelter-in-place (Fred Meyer) over on-the-go (Costco Gasoline), when compared with visitors to the former home CBG of Seattle Police Department - East Precinct.   
 
@@ -155,6 +155,7 @@ However, from a <img src="https://render.githubusercontent.com/render/math?math=
 Thus, for Starbucks, Tf-Idf<img src="https://render.githubusercontent.com/render/math?math=\approx">Tf, a fact already confirmed above through comparison of the raw `top_same_month_brand` data with the transformed brand-slice based on the King County cohort.
 
 So, a final comparision of CHOP with the rest of King County confirms what some already suspected: the revolution will not be televised ... nor sipped .
+
     [In] km_slice = km[:, kingmonth['bidxs']['Starbucks']]  
     [In] km[kingmonth['gidxs']['530330075005'], kingmonth['bidxs']['Starbucks']] > np.quantile(km_slice.todense(), .8)
     [Out] False
