@@ -119,7 +119,7 @@ I wrote a function called `display_cbg`for a reader-friendly view of a CBG in br
     Subway						15.525617
     The Home Depot				13.249032
     Safeway Fuel Station		13.224103
-    
+        
 Set differences between the indices of the CHOP and police `display_cbg` outputs reveal that visitors to CHOP preferred Taco Bell over Poke for the munchies and emphasized shelter-in-place (Fred Meyer) over on-the-go (Costco Gasoline), when compared with visitors to the former home CBG of Seattle Police Department - East Precinct.   
 
     [In] set(display_cbg('530330075005', kingmonth).index).difference(set(display_cbg('530330075004', kingmonth).index))
@@ -138,9 +138,10 @@ In 142,072 of the 216,291 national CBGs, visitors also had visited a Starbucks t
 
 I wrote a function called `plot_brand_importance` to make a map of this slice.  Again, nothing special (you can write your own).
 
-    [In] plot_brand_importance('Starbucks', usmonth, cbgs, states)
-        
-![Starbucks Brand Importance, usmonth](https://i.ibb.co/8gbF42z/foo-3.png)
+    [In] plot_brand_importance('Starbucks', usmonth)
+
+Starbucks Brand Importance (national cohort)            
+![](https://i.ibb.co/8gbF42z/foo-3.png)
 Starbucks's surprising rarity at a national level adds importance to the visits it receives from visitors to the CHOP.  This becomes evident through the up-scaling that occurs in CHOP's Tf-Idf statistics calculated on the national cohort, shown visually above and quantitatively below.  
 
     [In] um[usmonth['gidxs']['530330075005'], usmonth['bidxs']['Starbucks']]
