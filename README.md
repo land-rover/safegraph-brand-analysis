@@ -1,4 +1,4 @@
-#Analyzing Top Brands in SafeGraph Neighborhood Patterns Data
+# Analyzing Top Brands in SafeGraph Neighborhood Patterns Data
 
 SafeGraph provides timely information about the brands visitors to a neighborhood also visited during the same time period.  The data is provided in json through two columns in the Neighborhood Patterns schema: `top_same_month_brand` and `top_same_day_brand`.
 
