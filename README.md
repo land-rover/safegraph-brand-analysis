@@ -49,22 +49,22 @@ Element $(i,j)$ in the resulting Tf-Idf matrix corresponds to the importance of 
 
 In the same way that a word is important in a document because it's used frequently in that document but not in all other documents, a brand is important because it's co-visited in that geography but not in all other related geographies.  
 
-Thus, (1) viewing a "corpus" as a cohort consisting of all the geographies in a nation, state, or county, (2) viewing each a geography (i.e. census block group) in this cohort as a "document", and (3) viewing co-visited brands as "words" in that document (their term frequency indicated by the percentages in  `top_same_month_brand` or `top_same_day_brand`), the theory behind Tf-Idf enables element $(i,j)$ of the matrix to be understood as brand $j$'s <em>importance</em> in census block group $i$, with respect to a relevant cohort.
+Thus, (1) viewing a "corpus" as a cohort consisting of all the geographies in a nation, state, or county, (2) viewing each geography (i.e. census block group) in this cohort as a "document", and (3) viewing co-visited brands as "words" in that document (their term frequency indicated by the percentages in  `top_same_month_brand` or `top_same_day_brand`), the theory behind Tf-Idf enables element $(i,j)$ of the matrix to be understood as brand $j$'s <em>importance</em> in census block group $i$, with respect to a relevant cohort.
 
  ## **Is there anything to be gained by looking at the world in this way?**
 Yes.  
 
 Tf-Idf metrics will differ most from the raw percentages in `top_same_month_brand` or `top_same_day_brand` when brands are rare.  
 
-However, rarity is a relative term: brands can be popular in one part of the country yet completely unknown in another, simultaneously. 
+However, rarity is a relative term: brands can be popular in one part of the country yet completely unknown in another-- simultaneously. 
 
-Tf-Idf recognizes this explicitly and forces the modeler to declare up-front the area over which "rarity" will be assessed.
+Tf-Idf recognizes this explicitly and forces the modeler to declare up-front the area over which "rarity" should be assessed.
 
 What is gained?  Comparability, across space, time, and brands. 
  ## **So, how does the function work?**
->The primary [function]() is `brand_transformer`, which transforms SafeGraph Top Brands data into a $G \times B$ matrix of Tf-Idf metrics ('tfidf') and two companion dictionaries: one that indexes the $G$ geographies ('gidxs') in the matrix and the other that indexes the $B$ brands ('bidxs').  The resulting object contains all the information necessary for any kind of subsequent analysis of SafeGraph Top Brands data.
+>The primary [function]() is `brand_transformer`, which transforms SafeGraph Top Brands data into a $G \times B$ matrix of Tf-Idf metrics ('tfidf') and two companion dictionaries: one that indexes the matrix's $G$ geographies ('gidxs') and the other that indexes its $B$ brands ('bidxs').  The resulting object contains all the information necessary for any kind of subsequent analysis of SafeGraph Top Brands data.
 
-Here, `brand_transformer` is used to create two transformed objects based on `top_same_month_brand`: one for the contiguous United States called <em>usmonth</em> and the other for King County, Washington called <em>kingmonth</em>.
+Here, `brand_transformer` is used to create two transformed objects based on `top_same_month_brand` for the analysis to follow: one for the contiguous United States (<em>usmonth</em>) and the other for King County, Washington (<em>kingmonth</em>).
 
     #brand_transformer(sgdf, period, cohort)
     #		sgdf=a Neighborhood Patterns release (dataframe)
@@ -73,9 +73,9 @@ Here, `brand_transformer` is used to create two transformed objects based on `to
     [In] usmonth = brand_transformer(npatterns_raw, 'month', 'us')
     [In] kingmonth = brand_transformer(npatterns_raw, 'month', '53033')
 
-Resulting `brand_transformer` objects include a scipy.sparse matrix that can be sliced horizontally to provide a $(1 \times  B)$ importance vector describing a single CBG in "brand space" or vertically to provide a $G \times 1$ importance vector describing a single brand geographically.
+Resulting `brand_transformer` objects include a scipy.sparse matrix that can be sliced horizontally to provide a $1 \times  B$ importance vector describing a single CBG in "brand space," or vertically to provide a $G \times 1$ importance vector describing a single brand in physical space.
 
-Here, a $(1 \times  B)$ slice is used to learn more about CHOP in brand space.  We observe that there were 179 brands visited by visitors to King County.  Since SafeGraph currently only publishes the top 20 brands in any particular CBG, the view of a CBG in brand space will have only 20 non-zero entries.
+Here, a $1 \times  B$ slice is used to learn more about CHOP in brand space.  We observe that there were 179 brands visited by visitors to King County.  Since SafeGraph currently only publishes the top 20 brands in any particular CBG, the view of a CBG in brand space will have only 20 non-zero entries.
  
     [In] km = kingmonth['tfidf'] #a scipy.sparse matrix in the brand_transformer object
     [In] km[kingmonth['gidxs']['530330075005'], :]
@@ -92,7 +92,7 @@ Any distance measure can be applied to quantify differences between CBGs in bran
     [In] scipy.spatial.distance.euclidean(chop, otheradj)
     [Out] 0.40933726183689456
 
-I wrote a function called `display_cbg`for a reader-friendly view of a CBG in brand space.  Nothing special (you can write your own): just another way of looking at the same $(1 \times  B)$ slice.  
+I wrote a function called `display_cbg`for a reader-friendly view of a CBG in brand space.  Nothing special (you can write your own): just another way of looking at the same $(1 \times  B)$ slice for CHOP.  
      
     [In] display_cbg('530330075005', kingmonth)
     [Out] 						530330075005
@@ -135,21 +135,26 @@ We learn that in 142,072 of the 216,291 national CBGs, visitors also had visited
 
 I wrote a function called `plot_brand_importance` to make a map of this slice.  Again, nothing special (you can write your own): just one way of plotting the $G \times 1$ slice for the cohort defined by $G$ on a map.
 
-    [In] plot_brand_importance('Starbucks', usmonth, cbgs, states)    
+    [In] plot_brand_importance('Starbucks', usmonth, cbgs, states)
+        
+![enter image description here](https://i.ibb.co/gt7k9tJ/download.jpg)
 
-Starbucks's surprising rarity at a national level adds prominence to the visits it receives in Washington state.  This becomes evident through the scaling that occurs in its Tf-Idf statistics when they are calculated on a national cohort.  
+Starbucks's surprising rarity at a national level adds importance to the visits it receives in Washington state.  This becomes evident through the scaling that occurs in its Tf-Idf statistics calculated on the national cohort, shown visually above and quantitatively below.  
 
-![Starbucks, nationwide](https://ibb.co/CVtR8VQ?raw=true)
-However, from the <em>kingmonth</em> `brand_transformer` object, we learn that Starbucks is ubiquitous in King County.  Thus, for Starbucks, Tf-Idf $\approx$ Tf.  A comparison of the raw `top_same_month_brand` data from SafeGraph with the brand-slice from `brand_transformer` based on the King County cohort shows this above.
+    [In] um[usmonth['gidxs']['530330075005'], usmonth['bidxs']['Starbucks']]
+    [Out] 0.56
+
+However, from a $G \times 1$ slice of the <em>kingmonth</em> `brand_transformer` object, we learn that Starbucks is ubiquitous in King County.    
 
     [In] km[:, kingmonth['bidxs']['Starbucks']]
-    [Out]<1422x1 sparse matrix of type '<class 'numpy.float64'>'
-	with 1422 stored elements in Compressed Sparse Row format>
-  
+        [Out]<1422x1 sparse matrix of type '<class 'numpy.float64'>'
+    	with 1422 stored elements in Compressed Sparse Row format>
 
-**The revolution will not be televised or sipped.**
+Thus, for Starbucks, Tf-Idf $\approx$ Tf.  A comparison of the raw `top_same_month_brand` data from SafeGraph with the brand-slice from `brand_transformer` based on the King County cohort already confirmed this (above).
+     
+**Conclusion: the revolution will not be televised ... or sipped.**
 
-    [In]km_slice = km[:, kingmonth['bidxs']['Starbucks']]  
+    [In] km_slice = km[:, kingmonth['bidxs']['Starbucks']]  
     [In] km[kingmonth['gidxs']['530330075005'], kingmonth['bidxs']['Starbucks']] >= scipy.stats.mstats.mquantiles(km_slice, .9)
     [Out] False
   
@@ -160,7 +165,7 @@ Sound logic on SafeGraph's part, I imagine.
 
 The June 2020 Neighborhood Patterns release, at 5.6GB, is already unwieldy.  Expanding the number of Top Brands beyond 20 would make it even larger.   
 
-However, the preceding analysis shows potential pitfalls of an arbitrary cutoff.  Depending on the cohort most meaningful for a given application, some brands currently above the cutoff may belong below it and other brands below the cutoff may belong above it.  There is no way to know for sure until the relevant cohort is selected and the corresponding Tf-Idf metrics are calculated.
+However, the preceding analysis shows potential pitfalls in an arbitrary cutoff.  Depending on the cohort most meaningful for a given application, some brands currently above the cutoff may belong below it and other brands below the cutoff may belong above it.  There is no way to know for sure until the relevant cohort is selected and the corresponding Tf-Idf metrics are calculated.
 
 Fortunately, the Tf-Idf machinery in Python's sklearn module is lightning fast.  Moreover, with `top_same_month_brand` and `top_same_day_brand` provided for all brands, current truncation-induced upward bias in the Tf-Idf statistics will disappear. 
 
