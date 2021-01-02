@@ -140,8 +140,8 @@ I wrote a function called `plot_brand_importance` to make a map of this slice.  
 
     [In] plot_brand_importance('Starbucks', usmonth)
 
-Starbucks Brand Importance (national cohort)
-![](https://i.ibb.co/8gbF42z/foo-3.png)
+![](https://i.ibb.co/MP0q2K4/foo-4.png)
+
 Starbucks's surprising rarity at a national level adds importance to the visits it receives from visitors to the CHOP.  This becomes evident through the up-scaling that occurs in CHOP's Tf-Idf statistics calculated on the national cohort, shown visually above and quantitatively below.
     [In] um[usmonth['gidxs']['530330075005'], usmonth['bidxs']['Starbucks']]
     [Out] 59.65211013698326
