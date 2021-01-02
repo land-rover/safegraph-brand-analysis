@@ -113,7 +113,7 @@ I wrote a function called `display_cbg`for a reader-friendly view of a CBG in br
     Walmart						19.093695
     76						19.013357
     7-Eleven					18.753161
-    Costco Wholesale Corp.			18.000000
+    Costco Wholesale Corp.				18.000000
     Jack in the Box					16.451175
     ARCO						15.667727
     Subway						15.525617
@@ -143,6 +143,7 @@ I wrote a function called `plot_brand_importance` to make a map of this slice.  
 ![](https://i.ibb.co/MP0q2K4/foo-4.png)
 
 Starbucks's surprising rarity at a national level adds importance to the visits it receives from visitors to the CHOP.  This becomes evident through the up-scaling that occurs in CHOP's Tf-Idf statistics calculated on the national cohort, shown visually above and quantitatively below.
+
     [In] um[usmonth['gidxs']['530330075005'], usmonth['bidxs']['Starbucks']]
     [Out] 59.65211013698326
 
