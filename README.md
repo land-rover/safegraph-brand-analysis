@@ -153,7 +153,7 @@ However, from a <img src="https://render.githubusercontent.com/render/math?math=
         [Out] <1422x1 sparse matrix of type '<class 'numpy.float64'>'
     	with 1422 stored elements in Compressed Sparse Row format>
 
-Thus, for Starbucks, Tf-Idf<img src="https://render.githubusercontent.com/render/math?math=\approx">Tf, a fact already confirmed above through comparison of the raw `top_same_month_brand` data with the transformed brand-slice based on the King County cohort.
+Thus, for Starbucks, Tf-Idf<img src="https://render.githubusercontent.com/render/math?math=\equiv">Tf, a fact already confirmed above through comparison of the raw `top_same_month_brand` data with the transformed brand-slice based on the King County cohort.
 
 So, a final comparision of CHOP with the rest of King County confirms what some already suspected: the revolution will not be televised ... nor sipped .
 
